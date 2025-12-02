@@ -61,6 +61,7 @@ export const register = async (req, res) => {
       .status(201)
       .json({
         message: "User registered",
+        token,
         user: {
           id: user._id,
           email: user.email,
@@ -69,7 +70,9 @@ export const register = async (req, res) => {
       });
   } catch (err) {
     console.error("Register error:", err);
-    res.status(500).json({ message: "Server error" });
+    res
+      .status(500)
+      .json({ message: err.message || "Server error during registration" });
   }
 };
 
@@ -107,6 +110,11 @@ export const login = async (req, res) => {
 
     const token = generateJwtToken(user._id);
 
+    // If this is a master user, expose the ADMIN_KEY value in the response
+    // so the frontend can use it (e.g. send as x-admin-key header) to view
+    // protected admin resources like webhook logs.
+    const adminKey = user.isMaster ? process.env.ADMIN_KEY || null : null;
+
     res
       .cookie("token", token, {
         httpOnly: true,
@@ -117,15 +125,19 @@ export const login = async (req, res) => {
       .status(200)
       .json({
         message: "Logged in",
+        token,
         user: {
           id: user._id,
           email: user.email,
           isMaster: user.isMaster,
         },
+        adminKey,
       });
   } catch (err) {
     console.error("Login error:", err);
-    res.status(500).json({ message: "Server error" });
+    res
+      .status(500)
+      .json({ message: err.message || "Server error during login" });
   }
 };
 

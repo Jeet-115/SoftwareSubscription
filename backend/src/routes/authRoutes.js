@@ -1,30 +1,27 @@
 import express from "express";
-import { body } from "express-validator";
 import { register, login, logout } from "../controllers/authController.js";
-import { loginLimiter } from "../middleware/authMiddleware.js";
+import { loginLimiter, protect } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
-const emailValidator = body("email").isEmail().withMessage("Valid email required");
-const passwordValidator = body("password")
-  .isLength({ min: 4 })
-  .withMessage("Password must be at least 4 characters");
-
-router.post("/register", [emailValidator, passwordValidator], (req, res, next) => {
-  // express-validator is included for future checks; for now we call controller directly
-  return register(req, res, next);
-});
-
-router.post(
-  "/login",
-  loginLimiter,
-  [emailValidator, passwordValidator],
-  (req, res, next) => {
-    return login(req, res, next);
-  }
-);
-
+// Simple routes without express-validator middleware to avoid unexpected 500s
+router.post("/register", register);
+router.post("/login", loginLimiter, login);
 router.post("/logout", logout);
+
+// Get current user profile + subscription info
+router.get("/me", protect, (req, res) => {
+  const user = req.user;
+  res.json({
+    id: user._id,
+    email: user.email,
+    isMaster: user.isMaster,
+    subscriptionActive: user.subscriptionActive,
+    subscriptionExpiry: user.subscriptionExpiry,
+    subscriptionPlan: user.subscriptionPlan,
+    deviceId: user.deviceId,
+  });
+});
 
 export default router;
 

@@ -3,7 +3,12 @@ import dotenv from "dotenv";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import helmet from "helmet";
-import mongoSanitize from "express-mongo-sanitize";
+// NOTE: express-mongo-sanitize currently does not work well with Express 5
+// because Express 5's request object exposes req.query as a read-only getter.
+// This causes "Cannot set property query of #<IncomingMessage>" errors.
+// If you want to re‑enable it later, either downgrade to Express 4
+// or use a different sanitization approach.
+// import mongoSanitize from "express-mongo-sanitize";
 import connectDB from "./config/db.js";
 import authRoutes from "./routes/authRoutes.js";
 import subscriptionRoutes from "./routes/subscriptionRoutes.js";
@@ -53,7 +58,8 @@ app.use(
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use(mongoSanitize());
+// Disabled due to incompatibility with Express 5 (see note above).
+// app.use(mongoSanitize());
 
 // Health check
 app.get("/health", (req, res) => {
