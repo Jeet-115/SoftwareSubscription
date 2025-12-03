@@ -1,4 +1,6 @@
 import { useAuth } from "../context/AuthContext";
+import { motion } from "framer-motion";
+import { FiUser, FiMail, FiShield, FiCheckCircle, FiStar, FiClock } from "react-icons/fi";
 
 const Profile = () => {
   const { user } = useAuth();
@@ -11,47 +13,42 @@ const Profile = () => {
     ? new Date(user.subscriptionExpiry)
     : null;
 
-  return (
-    <div className="mx-auto flex min-h-[calc(100vh-3.5rem)] max-w-5xl flex-col px-4 py-8">
-      <h1 className="mb-4 text-2xl font-semibold text-slate-100">Profile</h1>
-      <div className="max-w-md rounded-lg border border-slate-800 bg-slate-900/70 p-4 text-sm">
-        <div className="mb-3">
-          <div className="text-xs text-slate-400">Email</div>
-          <div className="text-slate-100">{user.email}</div>
+  const ProfileItem = ({ icon, label, value }) => (
+    <div className="flex items-start space-x-4">
+        <div className="flex-shrink-0">{icon}</div>
+        <div>
+            <div className="text-xs text-slate-400">{label}</div>
+            <div className="text-slate-100 font-medium">{value}</div>
         </div>
-        <div className="mb-3">
-          <div className="text-xs text-slate-400">Account Type</div>
-          <div className="text-slate-100">
-            {user.isMaster ? "Master (Admin)" : "Normal User"}
-          </div>
-        </div>
-        <div className="mb-3">
-          <div className="text-xs text-slate-400">Subscription Status</div>
-          <div className="text-slate-100">
-            {user.subscriptionActive ? "Active" : "Inactive"}
-          </div>
-        </div>
-        <div className="mb-3">
-          <div className="text-xs text-slate-400">Subscription Plan</div>
-          <div className="text-slate-100">
-            {user.subscriptionPlan || "None"}
-          </div>
-        </div>
-        <div className="mb-1">
-          <div className="text-xs text-slate-400">Subscription Expiry</div>
-          <div className="text-slate-100">
-            {expiry ? expiry.toLocaleString() : "N/A"}
-          </div>
-        </div>
-        <div className="mt-4 text-[11px] text-slate-500">
-          Master accounts bypass device locks and subscription expiry for the
-          Electron app.
-        </div>
-      </div>
     </div>
+  );
+
+  return (
+    <motion.div 
+      initial={{ opacity: 0, y: 50 }} 
+      animate={{ opacity: 1, y: 0 }} 
+      transition={{ duration: 0.5 }} 
+      className="mx-auto max-w-5xl px-4 py-8"
+    >
+      <h1 className="mb-8 text-4xl font-bold text-slate-100 text-center flex items-center justify-center">
+        <FiUser className="mr-4"/> Your Profile
+      </h1>
+      <motion.div 
+        whileHover={{ scale: 1.02 }} 
+        className="max-w-md mx-auto rounded-xl border border-slate-800/50 bg-slate-900/30 p-8 text-sm shadow-xl backdrop-blur-lg space-y-6"
+      >
+        <ProfileItem icon={<FiMail className="text-primary-light" size={20}/>} label="Email" value={user.email} />
+        <ProfileItem icon={<FiShield className="text-primary-light" size={20}/>} label="Account Type" value={user.isMaster ? "Master (Admin)" : "Normal User"} />
+        <ProfileItem icon={<FiCheckCircle className="text-primary-light" size={20}/>} label="Subscription Status" value={user.subscriptionActive ? "Active" : "Inactive"} />
+        <ProfileItem icon={<FiStar className="text-primary-light" size={20}/>} label="Subscription Plan" value={user.subscriptionPlan || "None"} />
+        <ProfileItem icon={<FiClock className="text-primary-light" size={20}/>} label="Subscription Expiry" value={expiry ? expiry.toLocaleString() : "N/A"} />
+        
+        <div className="pt-4 text-xs text-slate-500">
+          Master accounts bypass device locks and subscription expiry for the Electron app.
+        </div>
+      </motion.div>
+    </motion.div>
   );
 };
 
 export default Profile;
-
-

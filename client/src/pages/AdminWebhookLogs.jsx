@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import api from "../utils/axios";
 import { useAuth } from "../context/AuthContext";
+import { motion } from "framer-motion";
+import { FiActivity, FiAlertTriangle, FiCheck, FiX, FiClock } from "react-icons/fi";
 
 const AdminWebhookLogs = () => {
   const [logs, setLogs] = useState([]);
@@ -12,7 +14,6 @@ const AdminWebhookLogs = () => {
     const load = async () => {
       setError("");
 
-      // Require admin key (only master users receive this on login)
       if (!adminKey) {
         setError("You are not authorized to view webhook logs.");
         setLoading(false);
@@ -42,55 +43,52 @@ const AdminWebhookLogs = () => {
   if (loading) {
     return (
       <div className="flex min-h-screen items-center justify-center text-slate-200">
-        Loading webhook logs...
+        <FiActivity className="animate-spin text-4xl text-primary-light" />
       </div>
     );
   }
 
   return (
-    <div className="mx-auto flex min-h-[calc(100vh-3.5rem)] max-w-5xl flex-col px-4 py-8">
-      <h1 className="mb-4 text-2xl font-semibold text-slate-100">
-        Webhook Logs
+    <motion.div 
+      initial={{ opacity: 0, y: 50 }} 
+      animate={{ opacity: 1, y: 0 }} 
+      transition={{ duration: 0.5 }} 
+      className="mx-auto max-w-7xl px-4 py-8"
+    >
+      <h1 className="mb-8 text-4xl font-bold text-slate-100 text-center flex items-center justify-center">
+        <FiActivity className="mr-4"/> Webhook Logs
       </h1>
       {error && (
-        <div className="mb-4 rounded-md border border-red-700 bg-red-950 px-3 py-2 text-xs text-red-200">
-          {error}
+        <div className="mb-4 rounded-md border border-red-700 bg-red-950 px-3 py-2 text-sm text-red-200 flex items-center">
+          <FiAlertTriangle className="mr-2"/> {error}
         </div>
       )}
-      <div className="overflow-x-auto rounded-lg border border-slate-800 bg-slate-900/60">
+      <div className="overflow-x-auto rounded-xl border border-slate-800/50 bg-slate-900/30 shadow-xl backdrop-blur-lg">
         <table className="min-w-full text-left text-xs text-slate-200">
-          <thead className="bg-slate-900/80 text-[11px] uppercase tracking-wide text-slate-400">
+          <thead className="bg-slate-900/80 text-sm uppercase tracking-wider text-slate-400">
             <tr>
-              <th className="px-3 py-2">Event</th>
-              <th className="px-3 py-2">Processed</th>
-              <th className="px-3 py-2">Error</th>
-              <th className="px-3 py-2">Created</th>
-              <th className="px-3 py-2">Raw Body</th>
+              <th className="px-4 py-3">Event</th>
+              <th className="px-4 py-3">Processed</th>
+              <th className="px-4 py-3">Error</th>
+              <th className="px-4 py-3">Created</th>
+              <th className="px-4 py-3">Raw Body</th>
             </tr>
           </thead>
           <tbody>
             {logs.map((log) => (
-              <tr key={log._id} className="border-t border-slate-800">
-                <td className="px-3 py-2 text-[11px]">
-                  {log.eventType || "-"}
-                </td>
-                <td className="px-3 py-2 text-[11px]">
+              <tr key={log._id} className="border-t border-slate-800/50 hover:bg-slate-800/20">
+                <td className="px-4 py-3 text-sm font-mono">{log.eventType || "-"}</td>
+                <td className="px-4 py-3">
                   {log.processed ? (
-                    <span className="text-emerald-400">Yes</span>
+                    <span className="text-emerald-400 inline-flex items-center"><FiCheck className="mr-1"/> Yes</span>
                   ) : (
-                    <span className="text-red-400">No</span>
+                    <span className="text-red-400 inline-flex items-center"><FiX className="mr-1"/> No</span>
                   )}
                 </td>
-                <td className="max-w-[160px] px-3 py-2 text-[11px] text-red-300">
-                  {log.error || "-"}
-                </td>
-                <td className="px-3 py-2 text-[11px] text-slate-400">
-                  {log.createdAt
-                    ? new Date(log.createdAt).toLocaleString()
-                    : "-"}
-                </td>
-                <td className="max-w-[240px] px-3 py-2 text-[10px] text-slate-300">
-                  <pre className="whitespace-pre-wrap break-words">
+                <td className="max-w-xs px-4 py-3 text-red-300 font-mono text-xs">{log.error || "-"}</td>
+                <td className="px-4 py-3 text-slate-400 inline-flex items-center mt-2"><FiClock className="mr-1.5"/>{log.createdAt ? new Date(log.createdAt).toLocaleString() : "-"}</td>
+                <td className="max-w-md px-4 py-3 text-slate-300">
+                  <pre className="whitespace-pre-wrap break-words bg-slate-900/50 p-2 rounded-md font-mono text-[10px]">
                     {log.rawBody || "-"}
                   </pre>
                 </td>
@@ -98,10 +96,7 @@ const AdminWebhookLogs = () => {
             ))}
             {!logs.length && (
               <tr>
-                <td
-                  colSpan="5"
-                  className="px-3 py-4 text-center text-xs text-slate-400"
-                >
+                <td colSpan="5" className="px-4 py-6 text-center text-sm text-slate-400">
                   No webhook logs found.
                 </td>
               </tr>
@@ -109,10 +104,8 @@ const AdminWebhookLogs = () => {
           </tbody>
         </table>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
 export default AdminWebhookLogs;
-
-

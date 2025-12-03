@@ -11,12 +11,13 @@ import Profile from "./pages/Profile";
 import AdminWebhookLogs from "./pages/AdminWebhookLogs";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { AuthProvider } from "./context/AuthContext";
+import "./styles/background.css"; 
 
 function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
-        <div className="flex min-h-screen flex-col bg-slate-950 text-slate-100">
+        <div className="flex min-h-screen flex-col text-slate-100 gradient-background">
           <Navbar />
           <main className="flex-1">
             <Routes>

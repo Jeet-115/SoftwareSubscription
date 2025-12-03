@@ -1,5 +1,7 @@
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { motion } from "framer-motion";
+import { FiLogIn, FiUserPlus, FiGrid, FiLogOut, FiCreditCard, FiUser, FiActivity } from "react-icons/fi";
 
 const Navbar = () => {
   const { user, logout } = useAuth();
@@ -12,51 +14,65 @@ const Navbar = () => {
 
   const linkClass = ({ isActive }) =>
     `px-3 py-2 rounded-md text-sm font-medium ${
-      isActive ? "bg-slate-800 text-white" : "text-slate-300 hover:bg-slate-800"
+      isActive ? "bg-secondary-dark text-white" : "text-slate-300 hover:bg-secondary-dark"
     }`;
 
   return (
-    <nav className="bg-slate-900 border-b border-slate-800">
+    <motion.nav 
+      initial={{ y: -100 }} 
+      animate={{ y: 0 }} 
+      transition={{ duration: 0.5 }} 
+      className="bg-transparent border-b border-slate-800/20"
+    >
       <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-        <div className="flex h-14 items-center justify-between">
+        <div className="flex h-16 items-center justify-between">
           <div className="flex items-center gap-3">
             <Link to="/" className="flex items-center gap-2 text-slate-100">
-              <span className="rounded bg-indigo-600 px-2 py-1 text-xs font-semibold">
-                SUB
-              </span>
-              <span className="text-sm font-semibold">Software Subscription</span>
+              <motion.div whileHover={{ rotate: 360, scale: 1.2 }}>
+                <FiActivity className="text-primary-light" size={24} />
+              </motion.div>
+              <span className="text-lg font-semibold">Device Tracker</span>
             </Link>
           </div>
           <div className="flex items-center gap-2">
             {user ? (
               <>
                 <NavLink to="/dashboard" className={linkClass}>
+                  <FiGrid className="inline mr-2" />
                   Dashboard
                 </NavLink>
                 <NavLink to="/buy" className={linkClass}>
+                  <FiCreditCard className="inline mr-2" />
                   Buy
                 </NavLink>
                 <NavLink to="/profile" className={linkClass}>
+                  <FiUser className="inline mr-2" />
                   Profile
                 </NavLink>
                 {user.isMaster && (
                   <NavLink to="/admin/webhook-logs" className={linkClass}>
+                    <FiActivity className="inline mr-2" />
                     Webhook Logs
                   </NavLink>
                 )}
-                <button
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
                   onClick={handleLogout}
-                  className="ml-2 rounded-md bg-red-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-red-700"
+                  className="ml-2 rounded-md bg-accent-dark px-3 py-1.5 text-xs font-medium text-white hover:bg-accent-dark/80"
                 >
+                  <FiLogOut className="inline mr-2" />
                   Logout
-                </button>
+                </motion.button>
               </>
             ) : (
               <>
                 <NavLink to="/login" className={linkClass}>
+                  <FiLogIn className="inline mr-2" />
                   Login
                 </NavLink>
                 <NavLink to="/register" className={linkClass}>
+                  <FiUserPlus className="inline mr-2" />
                   Register
                 </NavLink>
               </>
@@ -64,10 +80,8 @@ const Navbar = () => {
           </div>
         </div>
       </div>
-    </nav>
+    </motion.nav>
   );
 };
 
 export default Navbar;
-
-

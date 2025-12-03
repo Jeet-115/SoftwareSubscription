@@ -1,5 +1,7 @@
 import { useState } from "react";
 import api from "../utils/axios";
+import { motion } from "framer-motion";
+import { FiShoppingCart, FiAward, FiCheck } from "react-icons/fi";
 
 const loadRazorpayScript = () =>
   new Promise((resolve) => {
@@ -62,7 +64,7 @@ const BuySubscription = () => {
           },
         },
         theme: {
-          color: "#4f46e5",
+          color: "#FF69B4",
         },
       };
 
@@ -80,46 +82,59 @@ const BuySubscription = () => {
   };
 
   return (
-    <div className="mx-auto flex min-h-[calc(100vh-3.5rem)] max-w-5xl flex-col px-4 py-8">
-      <h1 className="mb-4 text-2xl font-semibold text-slate-100">
-        Buy / Renew Subscription
+    <motion.div 
+      initial={{ opacity: 0, y: 50 }} 
+      animate={{ opacity: 1, y: 0 }} 
+      transition={{ duration: 0.5 }} 
+      className="mx-auto max-w-5xl px-4 py-8"
+    >
+      <h1 className="mb-2 text-4xl font-bold text-slate-100 text-center">
+        Choose Your Plan
       </h1>
-      <p className="mb-4 text-xs text-slate-400">
+      <p className="mb-8 text-sm text-slate-400 text-center">
         Test environment: Trial ₹2 / Renewal ₹1, each valid for 20 minutes.
       </p>
-      <div className="grid gap-4 md:grid-cols-2">
-        <button
+      <div className="grid gap-8 md:grid-cols-2">
+        <motion.button
+          whileHover={{ scale: 1.05 }}
           type="button"
           onClick={() => setPlanType("trial")}
-          className={`rounded-lg border p-4 text-left text-sm ${
+          className={`rounded-xl border p-6 text-left text-sm transition-colors ${
             planType === "trial"
-              ? "border-indigo-500 bg-slate-900/70"
-              : "border-slate-800 bg-slate-900/40"
+              ? "border-secondary-DEFAULT bg-slate-900/50 backdrop-blur-lg"
+              : "border-slate-800/50 bg-slate-900/30 backdrop-blur-lg"
           }`}
         >
-          <div className="mb-1 text-slate-100">Trial Plan</div>
-          <div className="text-xl font-semibold text-indigo-400">₹2</div>
-          <div className="mt-1 text-[11px] text-slate-400">
-            20-minute access for testing.
+          <div className="mb-2 text-2xl font-semibold text-secondary-light flex items-center">
+            <FiAward className="mr-3" /> Trial Plan
           </div>
-        </button>
-        <button
+          <div className="text-4xl font-bold text-slate-100">₹2</div>
+          <div className="mt-2 text-xs text-slate-400">
+            20-minute access for testing purposes.
+          </div>
+           {planType === "trial" && <FiCheck className="absolute top-4 right-4 text-secondary-light" size={20}/>}
+        </motion.button>
+        <motion.button
+          whileHover={{ scale: 1.05 }}
           type="button"
           onClick={() => setPlanType("renewal")}
-          className={`rounded-lg border p-4 text-left text-sm ${
+          className={`rounded-xl border p-6 text-left text-sm transition-colors ${
             planType === "renewal"
-              ? "border-indigo-500 bg-slate-900/70"
-              : "border-slate-800 bg-slate-900/40"
+              ? "border-secondary-DEFAULT bg-slate-900/50 backdrop-blur-lg"
+              : "border-slate-800/50 bg-slate-900/30 backdrop-blur-lg"
           }`}
         >
-          <div className="mb-1 text-slate-100">Renewal Plan</div>
-          <div className="text-xl font-semibold text-indigo-400">₹1</div>
-          <div className="mt-1 text-[11px] text-slate-400">
+          <div className="mb-2 text-2xl font-semibold text-secondary-light flex items-center">
+            <FiShoppingCart className="mr-3" /> Renewal Plan
+          </div>
+          <div className="text-4xl font-bold text-slate-100">₹1</div>
+          <div className="mt-2 text-xs text-slate-400">
             Renew your 20-minute test access.
           </div>
-        </button>
+          {planType === "renewal" && <FiCheck className="absolute top-4 right-4 text-secondary-light" size={20}/>}
+        </motion.button>
       </div>
-      <div className="mt-6">
+      <div className="mt-8 text-center">
         {error && (
           <div className="mb-3 rounded-md border border-red-700 bg-red-950 px-3 py-2 text-xs text-red-200">
             {error}
@@ -130,23 +145,23 @@ const BuySubscription = () => {
             {message}
           </div>
         )}
-        <button
+        <motion.button
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
           type="button"
           onClick={startPayment}
           disabled={loading}
-          className="rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700 disabled:opacity-60"
+          className="rounded-md bg-secondary-DEFAULT px-8 py-3 text-lg font-bold text-white hover:bg-secondary-dark disabled:opacity-60 transition-colors"
         >
           {loading
-            ? "Starting payment..."
+            ? "Processing..."
             : planType === "trial"
             ? "Pay ₹2"
             : "Renew ₹1"}
-        </button>
+        </motion.button>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
 export default BuySubscription;
-
-
