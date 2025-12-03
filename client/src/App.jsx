@@ -12,7 +12,8 @@ import AdminWebhookLogs from "./pages/AdminWebhookLogs";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { AuthProvider } from "./context/AuthContext";
 import NeuronBackground from "./components/NeuronBackground";
-import "./styles/background.css"; 
+import "./styles/background.css";
+import Home from "./pages/Home";
 
 function App() {
   return (
@@ -23,7 +24,7 @@ function App() {
           <Navbar />
           <main className="flex-1">
             <Routes>
-              <Route path="/" element={<Navigate to="/dashboard" replace />} />
+              <Route path="/" element={<Home />} />
               <Route path="/register" element={<Register />} />
               <Route path="/login" element={<Login />} />
 

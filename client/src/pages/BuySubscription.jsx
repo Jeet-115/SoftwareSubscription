@@ -106,11 +106,11 @@ const BuySubscription = () => {
           }`}
         >
           <div className="mb-2 text-2xl font-semibold text-primary-light flex items-center">
-            <FiAward className="mr-3" /> Trial Plan
+            <FiAward className="mr-3" /> Yearly Plan
           </div>
-          <div className="text-4xl font-bold text-[#6e6670] text-text-DEFAULT">₹2</div>
+          <div className="text-4xl font-bold text-[#6e6670] text-text-DEFAULT">₹1250</div>
           <div className="mt-2 text-xs text-text-light">
-            20-minute access for testing purposes.
+            1 year access from the day of purchasing.
           </div>
            {planType === "trial" && <FiCheck className="absolute top-4 right-4 text-primary-light" size={20}/>}
         </motion.button>
@@ -127,9 +127,9 @@ const BuySubscription = () => {
           <div className="mb-2 text-2xl font-semibold text-primary-light flex items-center">
             <FiShoppingCart className="mr-3" /> Renewal Plan
           </div>
-          <div className="text-4xl font-bold text-[#6e6670] text-text-DEFAULT">₹1</div>
+          <div className="text-4xl font-bold text-[#6e6670] text-text-DEFAULT">₹1000</div>
           <div className="mt-2 text-xs text-text-light">
-            Renew your 20-minute test access.
+            Renew your 1 year plan to extend 1 more year.
           </div>
           {planType === "renewal" && <FiCheck className="absolute top-4 right-4 text-primary-light" size={20}/>}
         </motion.button>
@@ -156,8 +156,8 @@ const BuySubscription = () => {
           {loading
             ? "Processing..."
             : planType === "trial"
-            ? "Pay ₹2"
-            : "Renew ₹1"}
+            ? "Pay ₹1250"
+            : "Renew ₹1000"}
         </motion.button>
       </div>
     </motion.div>
