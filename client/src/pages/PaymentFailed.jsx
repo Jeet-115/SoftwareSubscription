@@ -22,7 +22,7 @@ const PaymentFailed = () => {
         <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
           <Link
             to="/buy"
-            className="inline-flex items-center justify-center rounded-md bg-slate-900/50 px-6 py-3 text-sm font-medium text-red-100 hover:bg-slate-800/50 transition-colors"
+            className="inline-flex items-center justify-center rounded-md bg-neutral-light/10 px-6 py-3 text-sm font-medium text-red-100 hover:bg-neutral-light/20 transition-colors"
           >
             <FiArrowLeft className="mr-2" /> Try Again
           </Link>

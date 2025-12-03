@@ -25,15 +25,15 @@ const Dashboard = () => {
 
   if (loading) {
     return (
-      <div className="flex min-h-screen items-center justify-center text-slate-200">
-        <FiGrid className="animate-spin text-4xl text-primary-light" />
+      <div className="flex min-h-screen items-center justify-center text-text-DEFAULT">
+        <FiGrid className="animate-spin text-4xl text-primary-DEFAULT" />
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="flex min-h-screen items-center justify-center text-red-300">
+      <div className="flex min-h-screen items-center justify-center text-red-400">
         {error}
       </div>
     );
@@ -51,22 +51,22 @@ const Dashboard = () => {
       transition={{ duration: 0.5 }} 
       className="mx-auto max-w-5xl px-4 py-8"
     >
-      <h1 className="mb-8 text-4xl font-bold text-slate-100 text-center">
+      <h1 className="mb-8 text-4xl text-[#6e6670] font-bold text-text-DEFAULT text-center">
         Welcome back, {data?.email}
       </h1>
       <div className="grid gap-8 md:grid-cols-2">
         <motion.div 
           whileHover={{ scale: 1.05 }} 
-          className="rounded-xl border border-slate-800/50 bg-slate-900/30 p-6 shadow-xl backdrop-blur-lg"
+          className="rounded-xl border border-secondary-dark/50 bg-neutral-light/10 p-6 shadow-xl backdrop-blur-lg"
         >
-          <h2 className="mb-4 text-xl font-semibold text-slate-200 flex items-center">
-            <FiCheckCircle className="mr-3 text-primary-light" />
+          <h2 className="mb-4 text-xl text-[#6e6670] font-semibold text-text-DEFAULT flex items-center">
+            <FiCheckCircle className="mr-3 text-primary-DEFAULT" />
             Subscription Status
           </h2>
-          <div className="space-y-3 text-sm text-slate-400">
+          <div className="space-y-3 text-sm text-text-light">
             <p>
               Plan:{" "}
-              <span className="font-medium text-slate-100">
+              <span className="font-medium text-text-DEFAULT">
                 {data?.subscriptionPlan || "None"}
               </span>
             </p>
@@ -84,7 +84,7 @@ const Dashboard = () => {
             <p className="flex items-center">
              <FiClock className="mr-2" />
               Expiry:{" "}
-              <span className="font-medium text-slate-100 ml-1">
+              <span className="font-medium text-text-DEFAULT ml-1">
                 {expiry ? expiry.toLocaleString() : "N/A"}
               </span>
             </p>
@@ -92,18 +92,18 @@ const Dashboard = () => {
         </motion.div>
         <motion.div 
           whileHover={{ scale: 1.05 }} 
-          className="rounded-xl border border-slate-800/50 bg-slate-900/30 p-6 shadow-xl backdrop-blur-lg"
+          className="rounded-xl border border-secondary-dark/50 bg-neutral-light/10 p-6 shadow-xl backdrop-blur-lg"
         >
-          <h2 className="mb-4 text-xl font-semibold text-slate-200 flex items-center">
-            <FiInfo className="mr-3 text-primary-light" />
+          <h2 className="mb-4 text-[#6e6670] text-xl font-semibold text-text-DEFAULT flex items-center">
+            <FiInfo className="mr-3 text-primary-DEFAULT" />
             Next Steps
           </h2>
-          <ul className="list-inside list-disc space-y-2 text-sm text-slate-400">
+          <ul className="list-inside list-disc space-y-2 text-sm text-text-light">
             <li>Use the Buy button to start or renew a subscription.</li>
             <li>Open your Electron app once the subscription is active.</li>
             <li className="flex items-center">
               Your account is a{" "}
-              <span className="font-semibold text-slate-100 ml-1 flex items-center">
+              <span className="font-semibold text-text-DEFAULT ml-1 flex items-center">
                  <FiUser className="mr-1" /> {data?.isMaster ? "Master" : "Normal User"}
               </span>
               .
@@ -111,7 +111,7 @@ const Dashboard = () => {
           </ul>
         </motion.div>
       </div>
-       <div className="mt-4 text-center text-xs text-slate-500">
+       <div className="mt-4 text-center text-xs text-text-light">
             <p>Test environment: subscriptions are valid for 20 minutes after payment.</p>
         </div>
     </motion.div>

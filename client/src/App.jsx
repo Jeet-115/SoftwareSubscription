@@ -11,13 +11,15 @@ import Profile from "./pages/Profile";
 import AdminWebhookLogs from "./pages/AdminWebhookLogs";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { AuthProvider } from "./context/AuthContext";
+import NeuronBackground from "./components/NeuronBackground";
 import "./styles/background.css"; 
 
 function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
-        <div className="flex min-h-screen flex-col text-slate-100 gradient-background">
+        <div className="flex min-h-screen flex-col text-text-DEFAULT neuron-background">
+        <NeuronBackground />
           <Navbar />
           <main className="flex-1">
             <Routes>

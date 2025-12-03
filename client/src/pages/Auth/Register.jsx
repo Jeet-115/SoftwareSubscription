@@ -51,12 +51,12 @@ const Register = () => {
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="w-full max-w-md rounded-xl border border-slate-800/50 bg-slate-900/30 p-6 shadow-xl backdrop-blur-lg"
+        className="w-full max-w-md rounded-xl border border-secondary-dark/50 bg-neutral-light/10 p-6 shadow-xl backdrop-blur-lg"
       >
-        <h1 className="mb-2 text-center text-3xl font-bold text-slate-100">
+        <h1 className="mb-2 text-[#6e6670] text-center text-3xl font-bold text-text-DEFAULT">
           Create Your Account
         </h1>
-        <p className="mb-6 text-center text-sm text-slate-400">
+        <p className="mb-6 text-center text-sm text-text-light">
           Join us and start managing your devices.
         </p>
         {error && (
@@ -66,18 +66,18 @@ const Register = () => {
         )}
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="relative">
-            <FiUser className="absolute top-1/2 left-3 -translate-y-1/2 text-slate-400" />
+            <FiUser className="absolute top-1/2 left-3 -translate-y-1/2 text-text-light" />
             <input
               type="text"
               name="name"
               value={form.name}
               onChange={handleChange}
               placeholder="Name (Optional)"
-              className="w-full rounded-md border border-slate-700/50 bg-slate-950/50 pl-10 pr-3 py-2 text-sm text-slate-100 outline-none focus:border-primary-light transition-colors"
+              className="w-full rounded-md border border-secondary-dark/30 bg-neutral-DEFAULT/20 pl-10 pr-3 py-2 text-sm text-text-DEFAULT outline-none focus:border-primary-light transition-colors"
             />
           </div>
           <div className="relative">
-            <FiMail className="absolute top-1/2 left-3 -translate-y-1/2 text-slate-400" />
+            <FiMail className="absolute top-1/2 left-3 -translate-y-1/2 text-text-light" />
             <input
               type="email"
               name="email"
@@ -85,11 +85,11 @@ const Register = () => {
               onChange={handleChange}
               placeholder="Email"
               required
-              className="w-full rounded-md border border-slate-700/50 bg-slate-950/50 pl-10 pr-3 py-2 text-sm text-slate-100 outline-none focus:border-primary-light transition-colors"
+              className="w-full rounded-md border border-secondary-dark/30 bg-neutral-DEFAULT/20 pl-10 pr-3 py-2 text-sm text-text-DEFAULT outline-none focus:border-primary-light transition-colors"
             />
           </div>
           <div className="relative">
-            <FiLock className="absolute top-1/2 left-3 -translate-y-1/2 text-slate-400" />
+            <FiLock className="absolute top-1/2 left-3 -translate-y-1/2 text-text-light" />
             <input
               type="password"
               name="password"
@@ -97,11 +97,11 @@ const Register = () => {
               onChange={handleChange}
               placeholder="Password"
               required
-              className="w-full rounded-md border border-slate-700/50 bg-slate-950/50 pl-10 pr-3 py-2 text-sm text-slate-100 outline-none focus:border-primary-light transition-colors"
+              className="w-full rounded-md border border-secondary-dark/30 bg-neutral-DEFAULT/20 pl-10 pr-3 py-2 text-sm text-text-DEFAULT outline-none focus:border-primary-light transition-colors"
             />
           </div>
           <div className="relative">
-            <FiLock className="absolute top-1/2 left-3 -translate-y-1/2 text-slate-400" />
+            <FiLock className="absolute top-1/2 left-3 -translate-y-1/2 text-text-light" />
             <input
               type="password"
               name="confirmPassword"
@@ -109,7 +109,7 @@ const Register = () => {
               onChange={handleChange}
               placeholder="Confirm Password"
               required
-              className="w-full rounded-md border border-slate-700/50 bg-slate-950/50 pl-10 pr-3 py-2 text-sm text-slate-100 outline-none focus:border-primary-light transition-colors"
+              className="w-full rounded-md border border-secondary-dark/30 bg-neutral-DEFAULT/20 pl-10 pr-3 py-2 text-sm text-text-DEFAULT outline-none focus:border-primary-light transition-colors"
             />
           </div>
           <motion.button
@@ -117,12 +117,12 @@ const Register = () => {
             whileTap={{ scale: 0.95 }}
             type="submit"
             disabled={loading}
-            className="mt-2 w-full rounded-md bg-primary-DEFAULT px-4 py-2 text-sm font-medium text-white hover:bg-primary-dark disabled:opacity-60 transition-colors"
+            className="mt-2 text-[#6e6670] w-full rounded-md bg-primary-DEFAULT px-4 py-2 text-sm font-medium  hover:bg-primary-dark disabled:opacity-60 transition-colors"
           >
             {loading ? "Registering..." : "Register"}
           </motion.button>
         </form>
-        <p className="mt-4 text-center text-xs text-slate-400">
+        <p className="mt-4 text-center text-xs text-text-light">
           Already have an account?{" "}
           <Link
             to="/login"

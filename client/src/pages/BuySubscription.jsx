@@ -64,7 +64,7 @@ const BuySubscription = () => {
           },
         },
         theme: {
-          color: "#FF69B4",
+          color: "#357ABD",
         },
       };
 
@@ -88,10 +88,10 @@ const BuySubscription = () => {
       transition={{ duration: 0.5 }} 
       className="mx-auto max-w-5xl px-4 py-8"
     >
-      <h1 className="mb-2 text-4xl font-bold text-slate-100 text-center">
+      <h1 className="mb-2 text-4xl font-bold text-[#6e6670] text-text-DEFAULT text-center">
         Choose Your Plan
       </h1>
-      <p className="mb-8 text-sm text-slate-400 text-center">
+      <p className="mb-8 text-sm text-text-light text-center">
         Test environment: Trial ₹2 / Renewal ₹1, each valid for 20 minutes.
       </p>
       <div className="grid gap-8 md:grid-cols-2">
@@ -101,18 +101,18 @@ const BuySubscription = () => {
           onClick={() => setPlanType("trial")}
           className={`rounded-xl border p-6 text-left text-sm transition-colors ${
             planType === "trial"
-              ? "border-secondary-DEFAULT bg-slate-900/50 backdrop-blur-lg"
-              : "border-slate-800/50 bg-slate-900/30 backdrop-blur-lg"
+              ? "border-primary-DEFAULT bg-neutral-light/20 backdrop-blur-lg"
+              : "border-secondary-dark/50 bg-neutral-light/10 backdrop-blur-lg"
           }`}
         >
-          <div className="mb-2 text-2xl font-semibold text-secondary-light flex items-center">
+          <div className="mb-2 text-2xl font-semibold text-primary-light flex items-center">
             <FiAward className="mr-3" /> Trial Plan
           </div>
-          <div className="text-4xl font-bold text-slate-100">₹2</div>
-          <div className="mt-2 text-xs text-slate-400">
+          <div className="text-4xl font-bold text-[#6e6670] text-text-DEFAULT">₹2</div>
+          <div className="mt-2 text-xs text-text-light">
             20-minute access for testing purposes.
           </div>
-           {planType === "trial" && <FiCheck className="absolute top-4 right-4 text-secondary-light" size={20}/>}
+           {planType === "trial" && <FiCheck className="absolute top-4 right-4 text-primary-light" size={20}/>}
         </motion.button>
         <motion.button
           whileHover={{ scale: 1.05 }}
@@ -120,18 +120,18 @@ const BuySubscription = () => {
           onClick={() => setPlanType("renewal")}
           className={`rounded-xl border p-6 text-left text-sm transition-colors ${
             planType === "renewal"
-              ? "border-secondary-DEFAULT bg-slate-900/50 backdrop-blur-lg"
-              : "border-slate-800/50 bg-slate-900/30 backdrop-blur-lg"
+              ? "border-primary-DEFAULT bg-neutral-light/20 backdrop-blur-lg"
+              : "border-secondary-dark/50 bg-neutral-light/10 backdrop-blur-lg"
           }`}
         >
-          <div className="mb-2 text-2xl font-semibold text-secondary-light flex items-center">
+          <div className="mb-2 text-2xl font-semibold text-primary-light flex items-center">
             <FiShoppingCart className="mr-3" /> Renewal Plan
           </div>
-          <div className="text-4xl font-bold text-slate-100">₹1</div>
-          <div className="mt-2 text-xs text-slate-400">
+          <div className="text-4xl font-bold text-[#6e6670] text-text-DEFAULT">₹1</div>
+          <div className="mt-2 text-xs text-text-light">
             Renew your 20-minute test access.
           </div>
-          {planType === "renewal" && <FiCheck className="absolute top-4 right-4 text-secondary-light" size={20}/>}
+          {planType === "renewal" && <FiCheck className="absolute top-4 right-4 text-primary-light" size={20}/>}
         </motion.button>
       </div>
       <div className="mt-8 text-center">
@@ -151,7 +151,7 @@ const BuySubscription = () => {
           type="button"
           onClick={startPayment}
           disabled={loading}
-          className="rounded-md bg-secondary-DEFAULT px-8 py-3 text-lg font-bold text-white hover:bg-secondary-dark disabled:opacity-60 transition-colors"
+          className="rounded-md text-[#6e6670] bg-primary-DEFAULT px-8 py-3 text-lg font-bold  hover:bg-primary-dark disabled:opacity-60 transition-colors"
         >
           {loading
             ? "Processing..."

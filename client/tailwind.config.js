@@ -5,19 +5,23 @@ export default {
     extend: {
       colors: {
         primary: {
-          light: '#FFDAB9',
-          DEFAULT: '#FFA500',
-          dark: '#FF8C00',
+          light: '#4A90E2',
+          DEFAULT: '#357ABD',
+          dark: '#2A5F8E',
         },
         secondary: {
-          light: '#FFC0CB',
-          DEFAULT: '#FF69B4',
-          dark: '#FF1493',
+          light: '#738290',
+          DEFAULT: '#5A6774',
+          dark: '#48525D',
         },
-        accent: {
-          light: '#FFA07A',
-          DEFAULT: '#FF0000',
-          dark: '#B22222',
+        neutral: {
+          light: '#F8F9FA',
+          DEFAULT: '#E9ECEF',
+          dark: '#DEE2E6',
+        },
+        text: {
+          DEFAULT: '#212529',
+          light: '#495057',
         },
       },
     },
