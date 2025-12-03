@@ -29,9 +29,9 @@ const Navbar = () => {
           <div className="flex items-center gap-3">
             <Link to="/" className="flex items-center gap-2 text-text-DEFAULT">
               <motion.div whileHover={{ rotate: 360, scale: 1.2 }}>
-                <FiActivity className="text-primary-DEFAULT" size={24} />
+                <FiActivity className="text-[#6e6670]" size={24} />
               </motion.div>
-              <span className="text-lg font-semibold">Device Tracker</span>
+              <span className="text-lg text-[#6e6670] font-semibold">ImportEase</span>
             </Link>
           </div>
           <div className="flex items-center gap-2">
