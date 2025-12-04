@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import api from "../utils/axios";
 import { motion } from "framer-motion";
 import { FiShoppingCart, FiAward, FiCheck } from "react-icons/fi";
@@ -17,10 +17,27 @@ const loadRazorpayScript = () =>
   });
 
 const BuySubscription = () => {
-  const [planType, setPlanType] = useState("trial");
+  const [planType, setPlanType] = useState(null); // This is the eligible plan.
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
+
+  useEffect(() => {
+    const fetchUserSubscription = async () => {
+      try {
+        const me = await api.get("/auth/me");
+        if (me.data && me.data.subscriptionPlan) {
+          setPlanType("renewal");
+        } else {
+          setPlanType("trial");
+        }
+      } catch (err) {
+        console.error("Could not fetch user info", err);
+        setError("Could not determine your subscription status. Please try again later.");
+      }
+    };
+    fetchUserSubscription();
+  }, []);
 
   const startPayment = async () => {
     setError("");
@@ -96,13 +113,14 @@ const BuySubscription = () => {
       </p>
       <div className="grid gap-8 md:grid-cols-2">
         <motion.button
-          whileHover={{ scale: 1.05 }}
+          whileHover={{ scale: planType === 'trial' ? 1.05 : 1 }}
           type="button"
-          onClick={() => setPlanType("trial")}
-          className={`rounded-xl border p-6 text-left text-sm transition-colors ${
+          onClick={() => {}} // No-op, selection is automatic
+          disabled={planType !== 'trial'}
+          className={`rounded-xl border p-6 text-left text-sm transition-colors relative ${
             planType === "trial"
               ? "border-primary-DEFAULT bg-neutral-light/20 backdrop-blur-lg"
-              : "border-secondary-dark/50 bg-neutral-light/10 backdrop-blur-lg"
+              : "border-secondary-dark/50 bg-neutral-light/10 backdrop-blur-lg opacity-50 cursor-not-allowed"
           }`}
         >
           <div className="mb-2 text-2xl font-semibold text-primary-light flex items-center">
@@ -115,13 +133,14 @@ const BuySubscription = () => {
            {planType === "trial" && <FiCheck className="absolute top-4 right-4 text-primary-light" size={20}/>}
         </motion.button>
         <motion.button
-          whileHover={{ scale: 1.05 }}
+          whileHover={{ scale: planType === 'renewal' ? 1.05 : 1 }}
           type="button"
-          onClick={() => setPlanType("renewal")}
-          className={`rounded-xl border p-6 text-left text-sm transition-colors ${
+          onClick={() => {}} // No-op, selection is automatic
+          disabled={planType !== 'renewal'}
+          className={`rounded-xl border p-6 text-left text-sm transition-colors relative ${
             planType === "renewal"
               ? "border-primary-DEFAULT bg-neutral-light/20 backdrop-blur-lg"
-              : "border-secondary-dark/50 bg-neutral-light/10 backdrop-blur-lg"
+              : "border-secondary-dark/50 bg-neutral-light/10 backdrop-blur-lg opacity-50 cursor-not-allowed"
           }`}
         >
           <div className="mb-2 text-2xl font-semibold text-primary-light flex items-center">
@@ -150,7 +169,7 @@ const BuySubscription = () => {
           whileTap={{ scale: 0.95 }}
           type="button"
           onClick={startPayment}
-          disabled={loading}
+          disabled={loading || !planType}
           className="rounded-md text-[#6e6670] bg-primary-DEFAULT px-8 py-3 text-lg font-bold  hover:bg-primary-dark disabled:opacity-60 transition-colors"
         >
           {loading

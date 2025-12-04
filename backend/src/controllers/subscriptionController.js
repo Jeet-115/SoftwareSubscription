@@ -37,15 +37,31 @@ export const createOrder = async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    const planConfig = getPlanConfig(planType || "trial");
+    const requestedPlanType = planType || "trial";
+
+    // A user who has never had a subscription before MUST purchase a "trial" plan.
+    if (!user.subscriptionPlan && requestedPlanType === "renewal") {
+      return res.status(400).json({ 
+        message: "You must purchase a trial plan first. Renewals are only for existing or past subscribers." 
+      });
+    }
+
+    // A user who has had a subscription before can ONLY purchase "renewal" plans.
+    if (user.subscriptionPlan && requestedPlanType === "trial") {
+      return res.status(400).json({ 
+        message: "You have already purchased a trial plan. You can only renew your subscription now." 
+      });
+    }
+
+    const planConfig = getPlanConfig(requestedPlanType);
 
     const options = {
       amount: planConfig.amountPaise,
       currency: "INR",
-      receipt: `order_rcpt_${Date.now()}`,
+      receipt: `order_rcpt_${Date.now()}`      ,
       notes: {
         email: user.email,
-        planType: planType || "trial",
+        planType: requestedPlanType,
       },
     };
 
@@ -111,6 +127,7 @@ export const handleWebhook = async (req, res) => {
     // We expect payment entity with notes containing email
     const paymentEntity = event?.payload?.payment?.entity;
     const email = paymentEntity?.notes?.email;
+    const planType = paymentEntity?.notes?.planType || "trial"; // Get planType from notes
 
     if (!email) {
       console.error("No email in payment notes");
@@ -129,12 +146,20 @@ export const handleWebhook = async (req, res) => {
       return res.status(404).send("User not found");
     }
 
-    // Activate subscription for 20 minutes (test)
+    const planConfig = getPlanConfig(planType);
     const now = Date.now();
-    const expiry = new Date(now + 20 * 60 * 1000);
+    let expiry;
+
+    if (planType === "renewal" && user.subscriptionActive && user.subscriptionExpiry) {
+      // Extend existing subscription
+      expiry = new Date(user.subscriptionExpiry.getTime() + planConfig.durationMs);
+    } else {
+      // New subscription or trial
+      expiry = new Date(now + planConfig.durationMs);
+    }
 
     user.subscriptionActive = true;
-    user.subscriptionPlan = "test";
+    user.subscriptionPlan = "test"; // both are test plans
     user.subscriptionExpiry = expiry;
 
     if (!user.softwareToken) {
@@ -152,5 +177,3 @@ export const handleWebhook = async (req, res) => {
     return res.status(500).send("Webhook processing failed");
   }
 };
-
-

@@ -1,5 +1,7 @@
+import 'dotenv/config';
+
 import express from "express";
-import dotenv from "dotenv";
+
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import helmet from "helmet";
@@ -14,7 +16,7 @@ import authRoutes from "./routes/authRoutes.js";
 import subscriptionRoutes from "./routes/subscriptionRoutes.js";
 import deviceRoutes from "./routes/deviceRoutes.js";
 
-dotenv.config();
+
 
 // Connect to MongoDB
 connectDB();
