@@ -15,6 +15,7 @@ import connectDB from "./config/db.js";
 import authRoutes from "./routes/authRoutes.js";
 import subscriptionRoutes from "./routes/subscriptionRoutes.js";
 import deviceRoutes from "./routes/deviceRoutes.js";
+import legalRoutes from "./routes/legalRoutes.js";
 
 
 
@@ -72,6 +73,7 @@ app.get("/health", (req, res) => {
 app.use("/auth", authRoutes);
 app.use("/subscription", subscriptionRoutes);
 app.use("/software", deviceRoutes);
+app.use("/legal", legalRoutes);
 
 // Root route
 app.get("/", (req, res) => {

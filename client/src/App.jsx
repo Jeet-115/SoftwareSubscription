@@ -14,6 +14,7 @@ import { AuthProvider } from "./context/AuthContext";
 import NeuronBackground from "./components/NeuronBackground";
 import "./styles/background.css";
 import Home from "./pages/Home";
+import LegalContentPage from "./pages/Legal/LegalcontentPage";
 
 function App() {
   return (
@@ -27,7 +28,57 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/register" element={<Register />} />
               <Route path="/login" element={<Login />} />
-
+              <Route
+                path="/contact"
+                element={
+                  <LegalContentPage
+                    slug="contact"
+                    title="Contact Us"
+                    subtitle="Connect with ImportEase if you need product help, billing support, or partnership details."
+                    showContactForm
+                  />
+                }
+              />
+              <Route
+                path="/shipping-policy"
+                element={
+                  <LegalContentPage
+                    slug="shipping"
+                    title="Shipping & Digital Delivery Policy"
+                    subtitle="Understand how we fulfill ImportEase subscriptions."
+                  />
+                }
+              />
+              <Route
+                path="/terms-and-conditions"
+                element={
+                  <LegalContentPage
+                    slug="terms"
+                    title="Terms and Conditions"
+                    subtitle="The rules that govern your use of ImportEase."
+                  />
+                }
+              />
+              <Route
+                path="/cancellations-and-refunds"
+                element={
+                  <LegalContentPage
+                    slug="cancellations"
+                    title="Cancellations & Refunds"
+                    subtitle="How cancellations work and when refunds apply."
+                  />
+                }
+              />
+              <Route
+                path="/privacy-policy"
+                element={
+                  <LegalContentPage
+                    slug="privacy"
+                    title="Privacy Policy"
+                    subtitle="How ImportEase collects and protects your data."
+                  />
+                }
+              />
               <Route
                 path="/dashboard"
                 element={
