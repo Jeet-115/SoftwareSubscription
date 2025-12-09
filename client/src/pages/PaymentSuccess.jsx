@@ -9,13 +9,13 @@ const PaymentSuccess = () => {
         initial={{ opacity: 0, scale: 0.9 }} 
         animate={{ opacity: 1, scale: 1 }} 
         transition={{ duration: 0.5 }} 
-        className="w-full max-w-md rounded-xl border border-emerald-700/50 bg-emerald-900/30 p-8 text-center shadow-xl backdrop-blur-lg"
+        className="w-full max-w-md rounded-xl border border-emerald-700/50 bg-emerald-900/70 p-8 text-center shadow-xl backdrop-blur-lg"
       >
         <FiCheckCircle className="mx-auto mb-4 text-6xl text-emerald-400" />
         <h1 className="mb-2 text-3xl font-bold text-emerald-200">
           Payment Successful
         </h1>
-        <p className="mb-3 text-sm text-emerald-100">
+        <p className="mb-3 text-sm text-emerald-200">
           Your payment was successful. The subscription will activate once the
           Razorpay webhook is processed, usually within a few seconds.
         </p>

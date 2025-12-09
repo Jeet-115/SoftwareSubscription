@@ -9,7 +9,7 @@ const PaymentFailed = () => {
         initial={{ opacity: 0, scale: 0.9 }} 
         animate={{ opacity: 1, scale: 1 }} 
         transition={{ duration: 0.5 }} 
-        className="w-full max-w-md rounded-xl border border-red-700/50 bg-red-900/30 p-8 text-center shadow-xl backdrop-blur-lg"
+        className="w-full max-w-md rounded-xl border border-red-700/50 bg-red-900/60 p-8 text-center shadow-xl backdrop-blur-lg"
       >
         <FiXCircle className="mx-auto mb-4 text-6xl text-red-400" />
         <h1 className="mb-2 text-3xl font-bold text-red-200">
