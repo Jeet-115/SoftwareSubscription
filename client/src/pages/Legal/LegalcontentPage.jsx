@@ -103,14 +103,14 @@ const LegalContentPage = ({ slug, title, subtitle, showContactForm = false }) =>
         <p className="text-sm uppercase tracking-widest text-primary-light">
           Updated {content?.updatedAt || "recently"}
         </p>
-        <h1 className="text-4xl font-bold text-text-DEFAULT">{title}</h1>
+        <h1 className="text-4xl font-bold text-[#6e6670] text-text-light">{title}</h1>
         <p className="mt-3 text-base text-text-light">
           {subtitle || content?.subtitle || ""}
         </p>
       </header>
 
       {content?.details && (
-        <div className="mb-8 grid gap-4 rounded-xl border border-secondary-dark/40 bg-neutral-dark/20 p-5 sm:grid-cols-2">
+        <div className="mb-8 grid gap-4 rounded-xl border border-secondary-dark/50 bg-neutral-light/10 p-5 sm:grid-cols-2 shadow-xl backdrop-blur-lg">
           {content.details.map((detail) => {
             const normalizedLabel = detail.label.toLowerCase();
             const icon =
@@ -127,13 +127,13 @@ const LegalContentPage = ({ slug, title, subtitle, showContactForm = false }) =>
               ];
 
             return (
-              <div key={detail.label} className="flex items-start rounded-lg bg-neutral-dark/40 p-4">
+              <div key={detail.label} className="flex items-start rounded-lg bg-neutral-light/10 p-4">
                 {icon && <span className="text-primary-light">{icon}</span>}
                 <div>
                   <p className="text-xs uppercase tracking-wide text-text-light">
                     {detail.label}
                   </p>
-                  <p className="text-sm font-semibold text-text-DEFAULT">
+                  <p className="text-sm font-semibold text-text-light">
                     {detail.value}
                   </p>
                 </div>
@@ -147,9 +147,9 @@ const LegalContentPage = ({ slug, title, subtitle, showContactForm = false }) =>
         {content?.sections?.map((section) => (
           <div
             key={section.heading}
-            className="rounded-2xl border border-secondary-dark/30 bg-neutral-dark/10 p-6 shadow-inner"
+            className="rounded-xl border border-secondary-dark/50 bg-neutral-light/10 p-6 shadow-xl backdrop-blur-lg"
           >
-            <h2 className="text-xl font-semibold text-text-DEFAULT">
+            <h2 className="text-xl font-semibold text-text-light">
               {section.heading}
             </h2>
             <p className="mt-2 text-sm leading-relaxed text-text-light">
@@ -160,8 +160,8 @@ const LegalContentPage = ({ slug, title, subtitle, showContactForm = false }) =>
       </section>
 
       {showContactForm && (
-        <section className="mt-10 rounded-2xl border border-primary-dark/40 bg-neutral-dark/10 p-6">
-          <h2 className="text-2xl font-semibold text-text-DEFAULT">
+        <section className="mt-10 rounded-xl border border-primary-dark/40 bg-neutral-light/10 p-6 shadow-xl backdrop-blur-lg">
+          <h2 className="text-2xl font-semibold text-text-light">
             Send us a message
           </h2>
           <p className="mb-4 text-sm text-text-light">
@@ -189,7 +189,7 @@ const LegalContentPage = ({ slug, title, subtitle, showContactForm = false }) =>
                   name="name"
                   value={formState.name}
                   onChange={handleFormChange}
-                  className="w-full rounded-md border border-secondary-dark/40 bg-neutral-dark/30 px-3 py-2 text-sm text-text-DEFAULT outline-none focus:border-primary-light"
+                  className="w-full rounded-md border border-secondary-dark/40 bg-neutral-dark/30 px-3 py-2 text-sm text-text-light outline-none focus:border-primary-light"
                   placeholder="Your full name"
                   required
                 />
@@ -203,7 +203,7 @@ const LegalContentPage = ({ slug, title, subtitle, showContactForm = false }) =>
                   name="email"
                   value={formState.email}
                   onChange={handleFormChange}
-                  className="w-full rounded-md border border-secondary-dark/40 bg-neutral-dark/30 px-3 py-2 text-sm text-text-DEFAULT outline-none focus:border-primary-light"
+                  className="w-full rounded-md border border-secondary-dark/40 bg-neutral-dark/30 px-3 py-2 text-sm text-text-light outline-none focus:border-primary-light"
                   placeholder="you@example.com"
                   required
                 />
@@ -218,7 +218,7 @@ const LegalContentPage = ({ slug, title, subtitle, showContactForm = false }) =>
                 name="subject"
                 value={formState.subject}
                 onChange={handleFormChange}
-                className="w-full rounded-md border border-secondary-dark/40 bg-neutral-dark/30 px-3 py-2 text-sm text-text-DEFAULT outline-none focus:border-primary-light"
+                className="w-full rounded-md border border-secondary-dark/40 bg-neutral-dark/30 px-3 py-2 text-sm text-text-light outline-none focus:border-primary-light"
                 placeholder="How can we help?"
               />
             </div>
@@ -231,7 +231,7 @@ const LegalContentPage = ({ slug, title, subtitle, showContactForm = false }) =>
                 value={formState.message}
                 onChange={handleFormChange}
                 rows="5"
-                className="w-full rounded-md border border-secondary-dark/40 bg-neutral-dark/30 px-3 py-2 text-sm text-text-DEFAULT outline-none focus:border-primary-light"
+                className="w-full rounded-md border border-secondary-dark/40 bg-neutral-dark/30 px-3 py-2 text-sm text-text-light outline-none focus:border-primary-light"
                 placeholder="Share as many details as possible."
                 required
               />
@@ -250,5 +250,3 @@ const LegalContentPage = ({ slug, title, subtitle, showContactForm = false }) =>
 };
 
 export default LegalContentPage;
-
-

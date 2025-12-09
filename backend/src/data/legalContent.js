@@ -4,9 +4,9 @@ const legalContent = {
       subtitle:
         "We are here to help you with billing, subscription access, or integration questions.",
       details: [
-        { label: "Support Email", value: "support@importease.app" },
-        { label: "Billing Email", value: "billing@importease.app" },
-        { label: "Phone", value: "+91 90909 90909" },
+        { label: "Support Email", value: "jeetmistry115@gmail.com" },
+        { label: "Billing Email", value: "importease115@protonmail.com" },
+        { label: "Phone", value: "+91 97370 46657" },
         {
           label: "Hours",
           value: "Monday to Friday, 10:00 AM – 7:00 PM IST (excluding holidays)",
@@ -14,7 +14,7 @@ const legalContent = {
         {
           label: "Registered Address",
           value:
-            "ImportEase Technologies, B/27, Silicon Park Biz Hub, Andheri East, Mumbai, MH 400059",
+            "Vadodara, Gujarat, India",
         },
       ],
       sections: [
