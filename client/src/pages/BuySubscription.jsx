@@ -66,7 +66,7 @@ const BuySubscription = () => {
         amount: order.amount,
         currency: order.currency || "INR",
         name: "Software Subscription",
-        description: "Test subscription",
+        description: "YEARLY subscription",
         order_id: order.orderId,
         prefill: {
           email,
@@ -109,7 +109,7 @@ const BuySubscription = () => {
         Choose Your Plan
       </h1>
       <p className="mb-8 text-sm text-text-light text-center">
-        Test environment: Trial ₹2 / Renewal ₹1, each valid for 20 minutes.
+        YEARLY PLAN: Yearly ₹1250 / Renewal ₹1000, each valid for 365 days.
       </p>
       <div className="grid gap-8 md:grid-cols-2">
         <motion.button

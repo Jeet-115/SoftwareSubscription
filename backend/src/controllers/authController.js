@@ -42,7 +42,7 @@ export const register = async (req, res) => {
     if (user.isMaster) {
       user.subscriptionActive = true;
       user.subscriptionExpiry = new Date("2099-01-01T00:00:00Z");
-      user.subscriptionPlan = "test";
+      user.subscriptionPlan = "YEARLY";
       user.deviceId = null;
       user.softwareToken = generateSoftwareToken();
     }
@@ -100,7 +100,7 @@ export const login = async (req, res) => {
       user.isMaster = true;
       user.subscriptionActive = true;
       user.subscriptionExpiry = new Date("2099-01-01T00:00:00Z");
-      user.subscriptionPlan = "test";
+      user.subscriptionPlan = "YEARLY";
       user.deviceId = null; // no device lock
       if (!user.softwareToken) {
         user.softwareToken = generateSoftwareToken();

@@ -8,12 +8,14 @@ import { generateSoftwareToken } from "../utils/generateToken.js";
 const getPlanConfig = (planType) => {
   // All test plans currently 20 minutes
   const durationMinutes = 20;
+  // const durationDays = 365;
   const amountInRupees = planType === "renewal" ? 1 : 2; // "trial"=2, "renewal"=1 by default
 
   return {
     amountPaise: amountInRupees * 100,
     durationMs: durationMinutes * 60 * 1000,
-    planName: "test",
+    // const durationMs = durationDays * 24 * 60 * 60 * 1000;
+    planName: "YEARLY",
   };
 };
 
@@ -117,11 +119,6 @@ export const handleWebhook = async (req, res) => {
       processed: false,
     });
 
-    // Debug logs (temporary) - show values used in HMAC check
-    console.log("WEBHOOK SECRET FROM ENV ->", JSON.stringify(process.env.RAZORPAY_WEBHOOK_SECRET));
-    console.log("RECEIVED SIGNATURE ->", signature);
-    console.log("RAW BODY START ->", rawBody.slice(0, 300)); // first 300 chars
-
     const expectedSignature = crypto
       .createHmac("sha256", secret)
       .update(rawBody)
@@ -175,7 +172,7 @@ export const handleWebhook = async (req, res) => {
     }
 
     user.subscriptionActive = true;
-    user.subscriptionPlan = "test";
+    user.subscriptionPlan = "YEARLY";
     user.subscriptionExpiry = expiry;
 
     if (!user.softwareToken) {

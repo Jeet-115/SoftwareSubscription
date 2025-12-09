@@ -111,9 +111,6 @@ const Dashboard = () => {
           </ul>
         </motion.div>
       </div>
-       <div className="mt-4 text-center text-xs text-text-light">
-            <p>Test environment: subscriptions are valid for 20 minutes after payment.</p>
-        </div>
     </motion.div>
   );
 };

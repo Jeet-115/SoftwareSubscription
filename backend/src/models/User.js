@@ -25,7 +25,7 @@ const userSchema = new mongoose.Schema(
     },
     subscriptionPlan: {
       type: String,
-      enum: ["yearly", "test", null],
+      enum: ["YEARLY","yearly", "test", null],
       default: null,
     },
 
