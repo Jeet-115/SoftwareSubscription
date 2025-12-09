@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { FiAlertTriangle, FiMail, FiPhone, FiClock, FiMapPin } from "react-icons/fi";
 import api from "../../utils/axios";
+const WEB3_FORMS_URL = "https://api.web3forms.com/submit";
+const WEB3_FORMS_ACCESS_KEY = "10c9390f-93ac-481c-8b8c-3fdf89486427";
 
 const labelIconMap = {
   email: <FiMail className="mr-2" />,
@@ -51,7 +53,7 @@ const LegalContentPage = ({ slug, title, subtitle, showContactForm = false }) =>
   const handleSubmit = async (e) => {
     e.preventDefault();
     setFormStatus({ type: "", message: "" });
-
+  
     if (!formState.name || !formState.email || !formState.message) {
       setFormStatus({
         type: "error",
@@ -59,21 +61,39 @@ const LegalContentPage = ({ slug, title, subtitle, showContactForm = false }) =>
       });
       return;
     }
-
+  
     try {
-      const res = await api.post("/legal/contact-message", formState);
-      setFormStatus({ type: "success", message: res.data.message });
-      setFormState({ name: "", email: "", subject: "", message: "" });
+      const formData = new FormData();
+      formData.append("access_key", WEB3_FORMS_ACCESS_KEY);
+      formData.append("name", formState.name);
+      formData.append("email", formState.email);
+      formData.append("subject", formState.subject || "New Contact Request");
+      formData.append("message", formState.message);
+  
+      const response = await fetch(WEB3_FORMS_URL, {
+        method: "POST",
+        body: formData,
+      });
+  
+      const result = await response.json();
+  
+      if (result.success) {
+        setFormStatus({ type: "success", message: "Your message has been sent successfully!" });
+        setFormState({ name: "", email: "", subject: "", message: "" });
+      } else {
+        setFormStatus({
+          type: "error",
+          message: result.message || "Failed to send message. Try again later.",
+        });
+      }
     } catch (err) {
-      console.error("Contact form error", err);
       setFormStatus({
         type: "error",
-        message:
-          err.response?.data?.message ||
-          "We could not send your message right now. Please try again.",
+        message: "Something went wrong. Please try again later.",
       });
     }
   };
+  
 
   if (loading) {
     return (
