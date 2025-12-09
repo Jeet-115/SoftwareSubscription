@@ -88,16 +88,26 @@ export const handleWebhook = async (req, res) => {
       return res.status(500).send("Webhook secret not configured");
     }
 
-    if (!req.headers["x-razorpay-signature"]) {
+    // Razorpay always sends the signature header
+    const signature = req.headers["x-razorpay-signature"];
+    if (!signature) {
+      console.warn("Missing x-razorpay-signature header");
       return res.status(400).send("Signature missing");
     }
 
-    const rawBody =
-      req.rawBody && typeof req.rawBody === "string"
-        ? req.rawBody
-        : req.rawBody
-        ? req.rawBody.toString("utf8")
-        : JSON.stringify(req.body);
+    // === IMPORTANT: obtain the exact raw payload string ===
+    // express.raw puts the raw Buffer into req.body (Buffer) for our route.
+    // We must convert that Buffer to the EXACT utf8 string that Razorpay sent.
+    // Fallback: if req.body is already a string, use it. Otherwise JSON.stringify.
+    let rawBody;
+    if (Buffer.isBuffer(req.body)) {
+      rawBody = req.body.toString("utf8");
+    } else if (typeof req.body === "string") {
+      rawBody = req.body;
+    } else {
+      // Last resort (shouldn't happen for express.raw), but keep for safety
+      rawBody = JSON.stringify(req.body);
+    }
 
     // Optional: create a log entry before validation
     const log = await WebhookLog.create({
@@ -107,12 +117,17 @@ export const handleWebhook = async (req, res) => {
       processed: false,
     });
 
-    const signature = req.headers["x-razorpay-signature"];
+    // Debug logs (temporary) - show values used in HMAC check
+    console.log("WEBHOOK SECRET FROM ENV ->", JSON.stringify(process.env.RAZORPAY_WEBHOOK_SECRET));
+    console.log("RECEIVED SIGNATURE ->", signature);
+    console.log("RAW BODY START ->", rawBody.slice(0, 300)); // first 300 chars
 
     const expectedSignature = crypto
       .createHmac("sha256", secret)
       .update(rawBody)
       .digest("hex");
+
+    console.log("EXPECTED SIGNATURE ->", expectedSignature);
 
     if (signature !== expectedSignature) {
       console.warn("Invalid Razorpay webhook signature");
@@ -122,12 +137,13 @@ export const handleWebhook = async (req, res) => {
       return res.status(400).send("Invalid signature");
     }
 
+    // Parse the event payload (we now trust rawBody)
     const event = JSON.parse(rawBody);
 
     // We expect payment entity with notes containing email
     const paymentEntity = event?.payload?.payment?.entity;
     const email = paymentEntity?.notes?.email;
-    const planType = paymentEntity?.notes?.planType || "trial"; // Get planType from notes
+    const planType = paymentEntity?.notes?.planType || "trial";
 
     if (!email) {
       console.error("No email in payment notes");
@@ -159,7 +175,7 @@ export const handleWebhook = async (req, res) => {
     }
 
     user.subscriptionActive = true;
-    user.subscriptionPlan = "test"; // both are test plans
+    user.subscriptionPlan = "test";
     user.subscriptionExpiry = expiry;
 
     if (!user.softwareToken) {
