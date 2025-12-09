@@ -54,7 +54,7 @@ app.use(
 // Raw body for Razorpay webhooks (must come BEFORE express.json)
 app.use(
   "/subscription/webhook",
-  express.raw({ type: "application/json" })
+  express.raw({ type: "*/*" })
 );
 
 // Body parsers for everything else
