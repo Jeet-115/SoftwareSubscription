@@ -7,14 +7,21 @@ import { generateSoftwareToken } from "../utils/generateToken.js";
 // Helper: determine amount and plan metadata based on requested plan
 const getPlanConfig = (planType) => {
   // All test plans currently 20 minutes
-  const durationMinutes = 20;
-  // const durationDays = 365;
-  const amountInRupees = planType === "renewal" ? 1 : 2; // "trial"=2, "renewal"=1 by default
+  // const durationMinutes = 20;
+  const durationDays = 365;
+  let amountInRupees;
+
+  if (planType === "trial") {
+    amountInRupees = 3000;      // First purchase
+  } else if (planType === "renewal") {
+    amountInRupees = 1250;      // Renewal
+  } else {
+    throw new Error("Invalid plan type");
+  }
 
   return {
     amountPaise: amountInRupees * 100,
-    durationMs: durationMinutes * 60 * 1000,
-    // const durationMs = durationDays * 24 * 60 * 60 * 1000;
+    durationMs: durationDays * 24 * 60 * 60 * 1000,
     planName: "YEARLY",
   };
 };
