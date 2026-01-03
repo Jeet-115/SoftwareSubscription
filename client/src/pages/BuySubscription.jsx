@@ -109,7 +109,7 @@ const BuySubscription = () => {
         Choose Your Plan
       </h1>
       <p className="mb-8 text-sm text-text-light text-center">
-        YEARLY PLAN: Yearly ₹1250 / Renewal ₹1000, each valid for 365 days.
+        YEARLY PLAN: Yearly ₹3000 / Renewal ₹1250, each valid for 365 days.
       </p>
       <div className="grid gap-8 md:grid-cols-2">
         <motion.button
@@ -126,7 +126,7 @@ const BuySubscription = () => {
           <div className="mb-2 text-2xl font-semibold text-primary-light flex items-center">
             <FiAward className="mr-3" /> Yearly Plan
           </div>
-          <div className="text-4xl font-bold text-[#6e6670] text-text-DEFAULT">₹1250</div>
+          <div className="text-4xl font-bold text-[#6e6670] text-text-DEFAULT">₹3000</div>
           <div className="mt-2 text-xs text-text-light">
             1 year access from the day of purchasing.
           </div>
@@ -146,7 +146,7 @@ const BuySubscription = () => {
           <div className="mb-2 text-2xl font-semibold text-primary-light flex items-center">
             <FiShoppingCart className="mr-3" /> Renewal Plan
           </div>
-          <div className="text-4xl font-bold text-[#6e6670] text-text-DEFAULT">₹1000</div>
+          <div className="text-4xl font-bold text-[#6e6670] text-text-DEFAULT">₹1250</div>
           <div className="mt-2 text-xs text-text-light">
             Renew your 1 year plan to extend 1 more year.
           </div>
