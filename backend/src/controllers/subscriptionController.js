@@ -43,15 +43,15 @@ export const createOrder = async (req, res) => {
 
     // A user who has never had a subscription before MUST purchase a "trial" plan.
     if (!user.subscriptionPlan && requestedPlanType === "renewal") {
-      return res.status(400).json({ 
-        message: "You must purchase a trial plan first. Renewals are only for existing or past subscribers." 
+      return res.status(400).json({
+        message: "You must purchase a trial plan first. Renewals are only for existing or past subscribers."
       });
     }
 
     // A user who has had a subscription before can ONLY purchase "renewal" plans.
     if (user.subscriptionPlan && requestedPlanType === "trial") {
-      return res.status(400).json({ 
-        message: "You have already purchased a trial plan. You can only renew your subscription now." 
+      return res.status(400).json({
+        message: "You have already purchased a trial plan. You can only renew your subscription now."
       });
     }
 
@@ -60,7 +60,7 @@ export const createOrder = async (req, res) => {
     const options = {
       amount: planConfig.amountPaise,
       currency: "INR",
-      receipt: `order_rcpt_${Date.now()}`      ,
+      receipt: `order_rcpt_${Date.now()}`,
       notes: {
         email: user.email,
         planType: requestedPlanType,
@@ -163,13 +163,13 @@ export const handleWebhook = async (req, res) => {
     const now = Date.now();
     let expiry;
 
-    if (planType === "renewal" && user.subscriptionActive && user.subscriptionExpiry) {
-      // Extend existing subscription
-      expiry = new Date(user.subscriptionExpiry.getTime() + planConfig.durationMs);
-    } else {
-      // New subscription or trial
-      expiry = new Date(now + planConfig.durationMs);
-    }
+    const paymentTime = new Date(paymentEntity.created_at * 1000); // Razorpay sends unix timestamp
+
+    // If not available (safety fallback)
+    const effectiveTime = paymentTime || new Date();
+
+    expiry = new Date(effectiveTime.getTime() + planConfig.durationMs);
+
 
     user.subscriptionActive = true;
     user.subscriptionPlan = "YEARLY";
